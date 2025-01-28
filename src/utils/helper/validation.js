@@ -29,12 +29,4 @@ const isValidEmail = (email) => {
   return true;
 };
 
-const isValidDomain = (domain) => {
-  const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]+\.)+[a-zA-Z]{2,}$/;
-  if (!domainRegex.test(domain)) {
-    return false;
-  }
-  return true;
-};
-
-export { isValidDomain, isValidEmail };
+export { isValidEmail };

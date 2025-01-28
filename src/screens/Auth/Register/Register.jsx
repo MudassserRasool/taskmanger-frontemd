@@ -7,13 +7,12 @@ import { NightScene } from '../../../assets';
 import ToastNotification from '../../../components/ToastNotification/ToastNotification';
 import Button from '../../../components/common/buttons/Button/Button';
 import { loginInputs } from '../../../data/index';
-import { useLoginMutation } from '../../../redux/features/auth/authApi';
+import { useRegisterMutation } from '../../../redux/features/auth/authApi';
 import { formSchema } from '../../../utils/helper/Schema';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const [register, { isLoading: loginLoading }] = useRegisterMutation();
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -23,7 +22,7 @@ const Login = () => {
     },
     validationSchema: formSchema,
     onSubmit: async (values) => {
-      const response = await login({ ...values, rememberMe });
+      const response = await register({ ...values });
       if (response.error) {
         return ToastNotification.error(response.error.data.message);
       } else if (response.data?.statusCode === 200) {
@@ -47,10 +46,6 @@ const Login = () => {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  };
-
-  const handleRememberMe = () => {
-    setRememberMe(!rememberMe);
   };
 
   return (
@@ -109,37 +104,24 @@ const Login = () => {
               )}
             </div>
           ))}
-          <div className="flex justify-between items-center">
-            <div>
-              <input
-                id="rememberPassword"
-                name="rememberPassword"
-                type="checkbox"
-                onChange={handleRememberMe}
-                value={rememberMe}
-              />
-              <label
-                className="text-[14px] font-medium text-[secondary] pl-2"
-                htmlFor="rememberPassword"
-              >
-                Remember me
-              </label>
-            </div>
-          </div>
 
-          {/* or register user */}
           <div className="flex justify-between items-center">
             <span className="text-[14px] font-medium text-[secondary]">
-              Don't have an account?
+              Already have an account?
             </span>
-            <div onClick={() => navigate('/register')}>
+            <div onClick={() => navigate('/login')}>
               <span className="text-[14px] font-medium text-[primary] cursor-pointer">
-                Register
+                Login
               </span>
             </div>
           </div>
 
-          <Button title="Log In" type="submit" onClick={formik.handleSubmit} />
+          <Button
+            disabled={loginLoading}
+            title="Register"
+            type="submit"
+            onClick={formik.handleSubmit}
+          />
         </form>
       </div>
       <div

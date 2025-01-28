@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { ManagementLogo, WhiteLogoWithoutText } from '../../../assets';
 
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -16,19 +15,19 @@ export default function TailwindSidebar({ sidebarOpen }) {
   let pathName = location.pathname;
 
   let navigation;
-  const role = localStorage.getItem('role');
+  const role = 'user';
   let sidebarColor;
   let menuColor;
   let log;
-  if (role === 'admin') {
+  if (role === 'user') {
     sidebarColor = 'flex grow flex-col gap-y-5  bg-black pb-4 shadow-right';
     menuColor = {
       active: 'bg-white text-black',
       inactive: 'text-white hover:text-white hover:bg-gray',
     };
     log = {
-      open: ManagementLogo,
-      close: WhiteLogoWithoutText,
+      open: 'ManagementLogo',
+      close: 'WhiteLogoWithoutText',
     };
     navigation = adminNavigation;
   }
@@ -52,7 +51,7 @@ export default function TailwindSidebar({ sidebarOpen }) {
       <div className="hidden z-50 lg:fixed lg:inset-y-0 rounded- lg:flex lg:w-72 lg:flex-col transition-all duration-300">
         <div className={sidebarColor}>
           <div className="flex h-16 justify-center my-8 shrink-0 items-center">
-            <img className="w-24" src={log?.open} alt="logo" />
+            <img className="w-24" src={log?.openk} alt="logo" />
           </div>
 
           <nav className="flex flex-1 flex-col">

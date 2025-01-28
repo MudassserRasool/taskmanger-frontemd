@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ToastNotification from '../../../../components/ToastNotification/ToastNotification';
 import Button from '../../../../components/ui/Button';
 import Card from '../../../../components/ui/Card';
 import InputField from '../../../../components/ui/InputField';
 import {
-  useCreateFeatureMutation,
-  useUpdateFeatureMutation,
-} from '../../../../redux/features/subscriptionFeatures/subscriptionFeatures';
+  useCreateTaskMutation,
+  useUpdateTaskMutation,
+} from '../../../../redux/features/taskManger/taskMangerApi';
 
-const FeatureForm = ({ data }) => {
+const TaskForm = ({ data }) => {
   console.log(data, 'data');
-  const [values, setValues] = useState(data);
-  const [createFeature] = useCreateFeatureMutation();
-  const [updateFeature] = useUpdateFeatureMutation();
+  const [values, setValues] = useState();
+  const [createTask] = useCreateTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
   const navigate = useNavigate();
-  // updateFeature({ id: 1, title: 'new title' });
 
   const onChange = (key, value) => {
     setValues((prev) => ({
@@ -29,8 +28,8 @@ const FeatureForm = ({ data }) => {
 
     try {
       const response = data?.id
-        ? await updateFeature({ id: data?.id, data: values })
-        : await createFeature(values);
+        ? await updateTask({ id: data?.id, data: values })
+        : await createTask(values);
       console.log(response);
       if (response.error) {
         ToastNotification.error(response?.error?.data?.message);
@@ -42,6 +41,11 @@ const FeatureForm = ({ data }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    setValues(data);
+  }, [data]);
+
   return (
     <form
       onSubmit={(e) => {
@@ -49,11 +53,10 @@ const FeatureForm = ({ data }) => {
       }}
     >
       <Card
-        title={`${data?.id ? 'Edit' : 'Create'} Feature`}
+        title={`${data?.id ? 'Edit' : 'Create'} Task`}
         className="space-y-3"
       >
         <InputField
-          // icon={<FaMoneyBills />}
           name="title"
           value={values?.title}
           onChange={onChange}
@@ -62,7 +65,6 @@ const FeatureForm = ({ data }) => {
           className={`w-full`}
         />
         <InputField
-          // icon={<FaMoneyBills />}
           name="description"
           value={values?.description}
           onChange={onChange}
@@ -70,15 +72,7 @@ const FeatureForm = ({ data }) => {
           type="string"
           className={`w-full`}
         />
-        <InputField
-          // icon={<FaMoneyBills />}
-          name="amount"
-          value={values?.amount}
-          onChange={(key, value) => onChange(key, Number(value))}
-          placeholder="Feature price"
-          type="number"
-          className={`w-full`}
-        />
+
         <Button type="submit" className="mt-3 !bg-green-400">
           Save
         </Button>
@@ -87,4 +81,4 @@ const FeatureForm = ({ data }) => {
   );
 };
 
-export default FeatureForm;
+export default TaskForm;

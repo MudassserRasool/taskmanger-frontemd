@@ -2,42 +2,25 @@ import apiSlice from '../../apiSlice';
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    register: builder.mutation({
+      query: (data) => ({
+        url: '/user/register',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
     login: builder.mutation({
       query: (credentials) => ({
         url: '/user/login',
         method: 'POST',
         body: credentials,
       }),
-      // invalidatesTags: ['users'],
-    }),
-
-    // get all users with filters and pagination
-    getUsers: builder.query({
-      query: (params) => ({
-        url: `/user`,
-        method: 'GET',
-        params,
-      }),
-      providesTags: ['users'],
-    }),
-
-    // block or unblock user
-    blockUser: builder.mutation({
-      query: ({ id, data }) => {
-        console.log(data, id, 'Inside api');
-        return {
-          url: `/user/${id}`,
-          method: 'PUT',
-          body: { isBlocked: data },
-        };
-      },
-      invalidatesTags: ['users'],
     }),
   }),
 });
 
-export const { useLoginMutation, useGetUsersQuery, useBlockUserMutation } =
-  authApi;
+export const { useLoginMutation, useRegisterMutation } = authApi;
 
 // how to sue useBlockUserMutation
 // const { mutate, isLoading } = useBlockUserMutation();
