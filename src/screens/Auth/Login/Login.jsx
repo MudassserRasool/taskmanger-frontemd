@@ -2,7 +2,7 @@ import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { NightScene } from '../../../assets';
 import ToastNotification from '../../../components/ToastNotification/ToastNotification';
 import Button from '../../../components/common/buttons/Button/Button';
@@ -129,16 +129,6 @@ const Login = () => {
           </div>
 
           {/* or register user */}
-          <div className="flex justify-between items-center">
-            <span className="text-[14px] font-medium text-[secondary]">
-              Don't have an account?
-            </span>
-            <Link to={'/register'}>
-              <span className="text-[14px] font-medium text-[primary] cursor-pointer">
-                Register
-              </span>
-            </Link>
-          </div>
 
           <Button title="Log In" type="submit" onClick={formik.handleSubmit} />
         </form>
