@@ -27,7 +27,12 @@ export const taskMangerApi = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['taskManger'],
+      // invalidatesTags: (result, error, { id }) => [{ type: 'taskManger', id }],
+
+      invalidatesTags: (result, error, { id }) => [
+        { type: 'taskManger', id },
+        'taskManger',
+      ],
     }),
 
     // get single task
@@ -36,6 +41,7 @@ export const taskMangerApi = apiSlice.injectEndpoints({
         url: `/task/${id}`,
         method: 'GET',
       }),
+      providesTags: (result, error, id) => [{ type: 'taskManger', id }],
     }),
 
     // delete task

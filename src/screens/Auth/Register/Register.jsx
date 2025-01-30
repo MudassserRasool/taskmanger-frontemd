@@ -10,7 +10,7 @@ import { loginInputs } from '../../../data/index';
 import { useRegisterMutation } from '../../../redux/features/auth/authApi';
 import { formSchema } from '../../../utils/helper/Schema';
 
-const Login = () => {
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [register, { isLoading: loginLoading }] = useRegisterMutation();
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ const Login = () => {
         <div className="w-full flex-col flex justify-center items-center">
           <h1 className="text-[22px] mb-4 font-semibold">Log in</h1>
           <span className="text-[18px] font-normal text-[secondary] ">
-            Log in to continue to Task Manger!
+            Register to continue to Task Manger!
           </span>
         </div>
 
@@ -140,4 +140,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

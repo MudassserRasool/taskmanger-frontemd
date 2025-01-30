@@ -1,4 +1,6 @@
 import React from 'react';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate } from 'react-router-dom';
 import ToastNotification from '../../../../components/ToastNotification/ToastNotification';
 import Button from '../../../../components/ui/Button';
@@ -11,6 +13,13 @@ import {
 const AllTasks = () => {
   const navigate = useNavigate();
   const { data, error, isLoading } = useGetTasksQuery();
+
+  // useEffect(() => {
+  //   if (token) {
+  //     refetch();
+  //   }
+  // }, [token]);
+
   const [deleteTask] = useDeleteTaskMutation();
 
   const handelDelete = async (id) => {
@@ -24,6 +33,23 @@ const AllTasks = () => {
     } catch (error) {
       console.error(error.message);
     }
+  };
+
+  const handleConfirmDelete = (id) => {
+    confirmAlert({
+      title: 'Confirm to delete',
+      message: 'Are you sure you want to delete this task?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => handelDelete(id),
+        },
+        {
+          label: 'No',
+          onClick: () => {},
+        },
+      ],
+    });
   };
   return (
     <Card
@@ -52,7 +78,9 @@ const AllTasks = () => {
               >
                 Edit
               </Button>
-              <Button onClick={() => handelDelete(task.id)}>Delete</Button>
+              <Button onClick={() => handleConfirmDelete(task.id)}>
+                Delete
+              </Button>
             </div>
           </div>
         ))}

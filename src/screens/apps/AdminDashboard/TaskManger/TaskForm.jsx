@@ -60,7 +60,7 @@ const TaskForm = ({ data }) => {
           name="title"
           value={values?.title}
           onChange={onChange}
-          placeholder="Feature Name"
+          placeholder="Task Title"
           type="string"
           className={`w-full`}
         />
@@ -68,14 +68,12 @@ const TaskForm = ({ data }) => {
           name="description"
           value={values?.description}
           onChange={onChange}
-          placeholder="Feature Description"
+          placeholder="Task Description"
           type="string"
           className={`w-full`}
         />
 
-        <Button type="submit" className="mt-3 !bg-green-400">
-          Save
-        </Button>
+        <Button type="submit">Save</Button>
       </Card>
     </form>
   );

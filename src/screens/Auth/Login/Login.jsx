@@ -2,7 +2,7 @@ import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { NightScene } from '../../../assets';
 import ToastNotification from '../../../components/ToastNotification/ToastNotification';
 import Button from '../../../components/common/buttons/Button/Button';
@@ -35,12 +35,13 @@ const Login = () => {
             : ''
         );
         setTimeout(() => {
-          navigate(`/user-dashboard/`);
-          localStorage.setItem('role', response?.data?.data.role);
-          setTimeout(() => {
+          const token = localStorage.getItem('token');
+          if (token) {
+            navigate(`/user-dashboard/`);
+            localStorage.setItem('role', response?.data?.data.role);
             window.location.reload();
-          }, 100);
-        }, 10);
+          }
+        }, 500);
       }
     },
   });
@@ -132,11 +133,11 @@ const Login = () => {
             <span className="text-[14px] font-medium text-[secondary]">
               Don't have an account?
             </span>
-            <div onClick={() => navigate('/register')}>
+            <Link to={'/register'}>
               <span className="text-[14px] font-medium text-[primary] cursor-pointer">
                 Register
               </span>
-            </div>
+            </Link>
           </div>
 
           <Button title="Log In" type="submit" onClick={formik.handleSubmit} />
